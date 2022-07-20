@@ -1,9 +1,11 @@
 import React from "react";
+import Header from "./components/Header";
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-2xl">Hello world!</h1>
+    <div className="w-full h-screen flex flex-col text-gray-50">
+      <Header />
+      <main className="bg-gray-900 flex-1"></main>
     </div>
   );
 };
