@@ -15,6 +15,7 @@ export const getARandomJoke = async (): Promise<OneJoke | null> => {
     const { data } = await httpService.get("/jokes/random");
     return data as OneJoke;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
