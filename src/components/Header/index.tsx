@@ -10,13 +10,13 @@ interface ILinksHeaderNav {
 const Header = () => {
   const linksNav: ILinksHeaderNav[] = [
     {
-      name: "Search one",
+      name: "Buscar uma",
       slug: "search-one",
       to: "/search",
     },
     {
-      name: "See my facts",
-      slug: "see-my-facts",
+      name: "Ver minhas piadas",
+      slug: "see-my-jokes",
       to: "/me",
     },
   ];
