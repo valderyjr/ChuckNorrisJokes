@@ -5,7 +5,8 @@ export const useAppContext = () => {
   const { myJokes, setMyJokes } = useContext(AppContext);
 
   const addToFavorites = (data: IJokeFavorite) => {
-    setMyJokes((prevJokes) => [...prevJokes, data]);
+    const isFavorited = isAFavoritedJoke(data.id);
+    return isFavorited ? "" : setMyJokes((prevJokes) => [...prevJokes, data]);
   };
 
   const removeFromFavorites = (id: string) => {
@@ -13,5 +14,10 @@ export const useAppContext = () => {
     setMyJokes([...newJokes]);
   };
 
-  return { myJokes, addToFavorites, removeFromFavorites };
+  const isAFavoritedJoke = (id: string) => {
+    const isFavorited = myJokes.find((item) => item.id === id);
+    return isFavorited ? true : false;
+  };
+
+  return { myJokes, addToFavorites, removeFromFavorites, isAFavoritedJoke };
 };

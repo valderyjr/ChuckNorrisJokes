@@ -11,27 +11,26 @@ interface ICardJoke {
 }
 
 const CardJoke = ({ createdAt, text, id }: ICardJoke) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const { addToFavorites, removeFromFavorites } = useAppContext();
+  const { addToFavorites, removeFromFavorites, isAFavoritedJoke } =
+    useAppContext();
+  const [isLiked, setIsLiked] = useState(isAFavoritedJoke(id));
 
   useEffect(() => {
-    setIsLiked(false);
-  }, [id, createdAt, text]);
+    setIsLiked(isAFavoritedJoke(id));
+  }, [id]);
 
   const handleLike = () => {
     setIsLiked((prevLike) => !prevLike);
   };
 
   useEffect(() => {
-    isLiked === true
-      ? addToFavorites({
-          text,
-          createdAt,
-          id,
-        })
-      : removeFromFavorites(id);
+    if (isLiked) {
+      addToFavorites({ createdAt, id, text });
+      return;
+    }
+    return removeFromFavorites(id);
   }, [isLiked]);
+
   return (
     <div className="w-full max-w-xs h-auto min-h-[10rem] bg-gray-800 flex flex-col rounded-md overflow-hidden relative drop-shadow-[2px_2px_5px_#000000] break-words">
       <span className="absolute right-2 top-2">
