@@ -12,7 +12,7 @@ export interface OneJoke {
 
 export const getARandomJoke = async (): Promise<OneJoke | null> => {
   try {
-    const { data } = await httpService.get("/jokes/random");
+    const { data } = await httpService.get("/random");
     return data as OneJoke;
   } catch (error) {
     console.log(error);
@@ -22,8 +22,18 @@ export const getARandomJoke = async (): Promise<OneJoke | null> => {
 
 export const getCategoryList = async (): Promise<string[] | null> => {
   try {
-    const { data } = await httpService.get("/jokes/categories");
+    const { data } = await httpService.get("/categories");
     return data as string[];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getARandomJokeFromCategory = async (): Promise<OneJoke | null> => {
+  try {
+    const { data } = await httpService.get("/random");
+    return data as OneJoke;
   } catch (error) {
     console.log(error);
     return null;
