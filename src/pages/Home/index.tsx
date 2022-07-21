@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../../components/Button";
 import CardJoke from "../../components/CardJoke";
 import PageTitle from "../../components/PageTitle";
 import Select from "../../components/Select";
+import { useAppContext } from "../../hooks/useAppContext";
 import AppLayout from "../../layouts/AppLayout";
 import {
   getARandomJoke,
@@ -12,6 +13,7 @@ import {
 } from "../../services/httpService";
 
 const HomePage = () => {
+  const useContext = useAppContext();
   const [joke, setJoke] = useState<OneJoke | null>(null);
   const [error, setError] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
