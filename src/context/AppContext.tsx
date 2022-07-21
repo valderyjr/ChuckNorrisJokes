@@ -6,26 +6,26 @@ import React, {
 } from "react";
 import { OneJoke } from "../services/httpService";
 
-interface IJokeFavorite {
+export interface IJokeFavorite {
   id: string;
   text: string;
   createdAt: string;
 }
 
 interface IAppContext {
-  myJokes?: IJokeFavorite[];
-  setMyJokes: Dispatch<SetStateAction<IJokeFavorite[] | undefined>>;
+  myJokes: IJokeFavorite[];
+  setMyJokes: Dispatch<SetStateAction<IJokeFavorite[]>>;
 }
 
 const AppContext = createContext<IAppContext>({
-  myJokes: undefined,
+  myJokes: [],
   setMyJokes: () => {},
 });
 
 AppContext.displayName = "AppContext";
 
 const AppProvider = ({ children }: { children: JSX.Element }) => {
-  const [favoriteJokes, setFavoriteJokes] = useState<IJokeFavorite[]>();
+  const [favoriteJokes, setFavoriteJokes] = useState<IJokeFavorite[]>([]);
 
   return (
     <AppContext.Provider

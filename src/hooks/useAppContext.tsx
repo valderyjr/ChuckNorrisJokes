@@ -1,19 +1,17 @@
 import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import { AppContext, IJokeFavorite } from "../context/AppContext";
 
 export const useAppContext = () => {
   const { myJokes, setMyJokes } = useContext(AppContext);
 
-  const populateMyJokes = () => {
-    const newData = [
-      {
-        id: "1",
-        text: "2",
-        createdAt: "22022",
-      },
-    ];
-    setMyJokes([...newData]);
+  const addToFavorites = (data: IJokeFavorite) => {
+    setMyJokes((prevJokes) => [...prevJokes, data]);
   };
 
-  return { myJokes, populateMyJokes };
+  const removeFromFavorites = (id: string) => {
+    const newJokes = myJokes.filter((joke) => joke.id !== id);
+    setMyJokes([...newJokes]);
+  };
+
+  return { myJokes, addToFavorites, removeFromFavorites };
 };

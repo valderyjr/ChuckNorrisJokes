@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillChatLeftQuoteFill } from "react-icons/bs";
 import { transformData } from "../../helpers/transformData";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useAppContext } from "../../hooks/useAppContext";
 
 interface ICardJoke {
   text: string;
-  createdAt?: string;
-  id?: string;
+  createdAt: string;
+  id: string;
 }
 
-const CardJoke = ({ createdAt, text }: ICardJoke) => {
+const CardJoke = ({ createdAt, text, id }: ICardJoke) => {
   const [isLiked, setIsLiked] = useState(false);
+
+  const { addToFavorites, removeFromFavorites } = useAppContext();
+
+  useEffect(() => {
+    setIsLiked(false);
+  }, [id, createdAt, text]);
 
   const handleLike = () => {
     setIsLiked((prevLike) => !prevLike);
-    console.log(isLiked);
   };
+
+  useEffect(() => {
+    isLiked === true
+      ? addToFavorites({
+          text,
+          createdAt,
+          id,
+        })
+      : removeFromFavorites(id);
+  }, [isLiked]);
   return (
     <div className="w-full max-w-xs h-auto min-h-[10rem] bg-gray-800 flex flex-col rounded-md overflow-hidden relative drop-shadow-[2px_2px_5px_#000000] break-words">
       <span className="absolute right-2 top-2">
