@@ -1,27 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsFillChatLeftQuoteFill } from "react-icons/bs";
+import { transformData } from "../../helpers/transformData";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-const test = ` Captain Planet once told Chuck Norris that he had control over all the
-        elements - earth, water, wind and fire. Chuck Norris then drowned him in
-        fire and blew him six feet under, thereby utilizing all four elements to
-        move the good captain asunder. (It should be noted here that Chuck
-        Norris, for the first time ever, deviated from using his signature
-        roundhouse kick.)`;
 interface ICardJoke {
-  createdAt?: string;
   text: string;
+  createdAt?: string;
+  id?: string;
 }
 
 const CardJoke = ({ createdAt, text }: ICardJoke) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    setIsLiked((prevLike) => !prevLike);
+    console.log(isLiked);
+  };
   return (
     <div className="w-full max-w-xs h-full min-h-[10rem] bg-gray-800 flex flex-col rounded-md overflow-hidden relative">
-      <BsFillChatLeftQuoteFill
-        className="absolute right-2 top-2"
-        fontSize={20}
-      />
+      <span className="absolute right-2 top-2">
+        <BsFillChatLeftQuoteFill fontSize={20} />
+      </span>
       <p className="flex-1 font-bold pl-4 pr-8 py-4">{text}</p>
-      <div className="w-full bg-gray-800 text-gray-200 border-t text-sm h-auto box-border border-gray-900 font-semibold py-1 pl-4">
-        Criado em: 24 de junho de 2020.
+      <div className="w-full bg-gray-800 text-gray-200 border-t h-auto min-h-[30px] border-gray-900 font-semibold py-2 pl-4 relative">
+        <p className="text-xs inline-block">
+          Criado em: {createdAt ? transformData(createdAt) : "Data indefinida."}
+          {isLiked ? (
+            <AiFillHeart
+              className="inline-block absolute right-2 top-3 cursor-pointer"
+              fontSize={20}
+              onClick={handleLike}
+            />
+          ) : (
+            <AiOutlineHeart
+              className="inline-block absolute right-2 top-3 cursor-pointer"
+              fontSize={20}
+              onClick={handleLike}
+            />
+          )}
+        </p>
       </div>
     </div>
   );

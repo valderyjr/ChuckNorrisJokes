@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import Button from "../../components/Button";
 import CardJoke from "../../components/CardJoke";
 import AppLayout from "../../layouts/AppLayout";
-import { getARandomJoke } from "../../services/httpService";
+import { getARandomJoke, OneJoke } from "../../services/httpService";
 
 const HomePage = () => {
-  const [joke, setJoke] = useState("");
+  const [joke, setJoke] = useState<OneJoke | null>(null);
   const [error, setError] = useState(false);
-  const handleAxios = async () => {
+
+  const handleRandomJoke = async () => {
     const randomJoke = await getARandomJoke();
     if (!randomJoke) {
-      setJoke("");
+      setJoke(null);
       setError(true);
       return;
     }
     setError(false);
-    setJoke(randomJoke.value);
+    setJoke(randomJoke);
     return;
   };
   return (
@@ -24,9 +25,15 @@ const HomePage = () => {
         Brinque com piadas aleatórias sobre o Chuck Norris!
       </h1>
       <section className="flex-1 mt-8 flex flex-col gap-8 items-center">
-        <Button text="Gere uma piada aleatória" onClick={handleAxios} />
+        <Button text="Gere uma piada aleatória" onClick={handleRandomJoke} />
         <div className="flex items-center justify-center w-full">
-          {joke && <CardJoke text={joke} />}
+          {joke && (
+            <CardJoke
+              text={joke.value}
+              createdAt={joke.created_at}
+              id={joke.id}
+            />
+          )}
           {error && (
             <p className="text-2xl text-red-600 font-bold">
               Ocorreu um erro interno.

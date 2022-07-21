@@ -1,6 +1,6 @@
 import { httpService } from "../config/http";
 
-interface OneJoke {
+export interface OneJoke {
   categories: string[];
   created_at: string;
   icon_url: string;
