@@ -17,7 +17,7 @@ const CardJoke = ({ createdAt, text }: ICardJoke) => {
     console.log(isLiked);
   };
   return (
-    <div className="w-full max-w-xs h-full min-h-[10rem] bg-gray-800 flex flex-col rounded-md overflow-hidden relative">
+    <div className="w-full max-w-xs h-auto min-h-[10rem] bg-gray-800 flex flex-col rounded-md overflow-hidden relative drop-shadow-[2px_2px_5px_#000000] break-words">
       <span className="absolute right-2 top-2">
         <BsFillChatLeftQuoteFill fontSize={20} />
       </span>

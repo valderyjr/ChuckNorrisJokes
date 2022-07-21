@@ -10,6 +10,11 @@ export interface OneJoke {
   value: string;
 }
 
+export interface IMultipleJokes {
+  total: number;
+  result: OneJoke[];
+}
+
 export const getARandomJoke = async (): Promise<OneJoke | null> => {
   try {
     const { data } = await httpService.get("/random");
@@ -36,6 +41,18 @@ export const getARandomJokeFromCategory = async (
   try {
     const { data } = await httpService.get(`/random?category=${category}`);
     return data as OneJoke;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getJokesFromSearch = async (
+  nameSearch: string
+): Promise<IMultipleJokes | null> => {
+  try {
+    const { data } = await httpService.get(`/search?query=${nameSearch}`);
+    return data as IMultipleJokes;
   } catch (error) {
     console.log(error);
     return null;

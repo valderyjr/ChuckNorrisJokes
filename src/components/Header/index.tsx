@@ -22,7 +22,7 @@ const Header = () => {
   ];
   return (
     <header className="w-full bg-gray-800 h-32 flex flex-col justify-center gap-4 px-4 md:px-8 md:flex-row md:justify-between md:items-center">
-      <a href="#" className="h-1/2 w-fit mx-auto md:h-full md:mx-0">
+      <a href="/" className="h-1/2 w-fit mx-auto md:h-full md:mx-0">
         <img
           src={logoChuck}
           alt="Logo do Chuck Norris."
