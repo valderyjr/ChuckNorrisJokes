@@ -1,6 +1,6 @@
 import { httpService } from "../config/http";
 
-export interface OneJoke {
+export interface IOneJoke {
   categories: string[];
   created_at: string;
   icon_url: string;
@@ -12,13 +12,13 @@ export interface OneJoke {
 
 export interface IMultipleJokes {
   total: number;
-  result: OneJoke[];
+  result: IOneJoke[];
 }
 
-export const getARandomJoke = async (): Promise<OneJoke | null> => {
+export const getARandomJoke = async (): Promise<IOneJoke | null> => {
   try {
     const { data } = await httpService.get("/random");
-    return data as OneJoke;
+    return data as IOneJoke;
   } catch (error) {
     console.log(error);
     return null;
@@ -37,10 +37,10 @@ export const getCategoryList = async (): Promise<string[] | null> => {
 
 export const getARandomJokeFromCategory = async (
   category: string
-): Promise<OneJoke | null> => {
+): Promise<IOneJoke | null> => {
   try {
     const { data } = await httpService.get(`/random?category=${category}`);
-    return data as OneJoke;
+    return data as IOneJoke;
   } catch (error) {
     console.log(error);
     return null;

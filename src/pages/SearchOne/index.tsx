@@ -4,7 +4,7 @@ import CardJoke from "../../components/CardJoke";
 import Input from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import AppLayout from "../../layouts/AppLayout";
-import { getJokesFromSearch, OneJoke } from "../../services/httpService";
+import { getJokesFromSearch, IOneJoke } from "../../services/httpService";
 import {
   BsFillArrowRightSquareFill,
   BsFillArrowLeftSquareFill,
@@ -13,8 +13,8 @@ import {
 const SearchOne = () => {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
-  const [jokeList, setJokeList] = useState<OneJoke[] | null>(null);
-  const [jokeSelected, setJokeSelected] = useState<OneJoke | null>(null);
+  const [jokeList, setJokeList] = useState<IOneJoke[] | null>(null);
+  const [jokeSelected, setJokeSelected] = useState<IOneJoke | null>(null);
   const [quantity, setQuantity] = useState(0);
 
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,7 +75,8 @@ const SearchOne = () => {
           {jokeList && jokeSelected && (
             <>
               <h2 className="font-bold text-xl text-center">
-                Achamos {quantity} piadas com esse tema.
+                Achamos {quantity} {quantity > 1 ? "piadas" : "piada"} com sua
+                palavra.
               </h2>
               <div className="w-full flex justify-center items-center gap-4">
                 {jokeSelected.id !== jokeList[0].id && (

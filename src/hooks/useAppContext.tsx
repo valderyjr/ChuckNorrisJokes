@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext, IJokeFavorite } from "../context/AppContext";
 
 export const useAppContext = () => {
@@ -6,7 +6,7 @@ export const useAppContext = () => {
 
   const addToFavorites = (data: IJokeFavorite) => {
     const isFavorited = isAFavoritedJoke(data.id);
-    return isFavorited ? "" : setMyJokes((prevJokes) => [...prevJokes, data]);
+    isFavorited ? "" : setMyJokes((prevJokes) => [...prevJokes, data]);
   };
 
   const removeFromFavorites = (id: string) => {
@@ -19,5 +19,10 @@ export const useAppContext = () => {
     return isFavorited ? true : false;
   };
 
-  return { myJokes, addToFavorites, removeFromFavorites, isAFavoritedJoke };
+  return {
+    myJokes,
+    addToFavorites,
+    removeFromFavorites,
+    isAFavoritedJoke,
+  };
 };

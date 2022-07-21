@@ -9,12 +9,12 @@ import {
   getARandomJoke,
   getARandomJokeFromCategory,
   getCategoryList,
-  OneJoke,
+  IOneJoke,
 } from "../../services/httpService";
 
 const HomePage = () => {
   const useContext = useAppContext();
-  const [joke, setJoke] = useState<OneJoke | null>(null);
+  const [joke, setJoke] = useState<IOneJoke | null>(null);
   const [error, setError] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryChoosed, setCategoryChoosed] = useState("");

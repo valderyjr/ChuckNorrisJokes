@@ -2,9 +2,10 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
-import { OneJoke } from "../services/httpService";
+import { getContext, setContext } from "../hooks/useLocalStorage";
 
 export interface IJokeFavorite {
   id: string;
@@ -25,7 +26,17 @@ const AppContext = createContext<IAppContext>({
 AppContext.displayName = "AppContext";
 
 const AppProvider = ({ children }: { children: JSX.Element }) => {
-  const [favoriteJokes, setFavoriteJokes] = useState<IJokeFavorite[]>([]);
+  const hasFavoritedJokes = () => {
+    const response = getContext();
+    return response ? response : [];
+  };
+  const [favoriteJokes, setFavoriteJokes] = useState<IJokeFavorite[]>(() =>
+    hasFavoritedJokes()
+  );
+
+  useEffect(() => {
+    setContext(favoriteJokes);
+  }, [favoriteJokes]);
 
   return (
     <AppContext.Provider

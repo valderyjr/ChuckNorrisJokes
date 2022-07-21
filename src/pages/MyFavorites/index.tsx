@@ -9,7 +9,6 @@ const MyFavorites = () => {
   const { myJokes } = useAppContext();
   useEffect(() => {
     myJokes.length > 0 ? setError(false) : setError(true);
-    console.log(myJokes);
   }, []);
   return (
     <AppLayout>
@@ -25,14 +24,15 @@ const MyFavorites = () => {
         </div>
       )}
       <div className="mt-8 grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-x-4 gap-y-8 p-2 justify-items-center">
-        {myJokes.map((joke) => (
-          <CardJoke
-            key={joke.id}
-            id={joke.id}
-            createdAt={joke.createdAt}
-            text={joke.text}
-          />
-        ))}
+        {myJokes.length > 0 &&
+          myJokes.map((joke) => (
+            <CardJoke
+              key={joke.id}
+              id={joke.id}
+              createdAt={joke.createdAt}
+              text={joke.text}
+            />
+          ))}
       </div>
     </AppLayout>
   );
