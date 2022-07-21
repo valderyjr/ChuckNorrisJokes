@@ -56,7 +56,7 @@ const SearchOne = () => {
 
   return (
     <AppLayout>
-      <PageTitle title="Pesquise por uma palavra ou categoria!" />
+      <PageTitle title="Pesquise por uma palavra!" />
       <section className="flex-1 flex mt-8 flex-col gap-8">
         <form
           className="flex flex-col md:flex-row gap-8 items-center justify-center"
