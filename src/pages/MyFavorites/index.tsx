@@ -9,7 +9,7 @@ const MyFavorites = () => {
   const { myJokes } = useAppContext();
   useEffect(() => {
     myJokes.length > 0 ? setError(false) : setError(true);
-  }, []);
+  }, [myJokes]);
   return (
     <AppLayout>
       <PageTitle title="Estas são suas piadas favoritas" />
