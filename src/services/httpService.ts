@@ -30,9 +30,11 @@ export const getCategoryList = async (): Promise<string[] | null> => {
   }
 };
 
-export const getARandomJokeFromCategory = async (): Promise<OneJoke | null> => {
+export const getARandomJokeFromCategory = async (
+  category: string
+): Promise<OneJoke | null> => {
   try {
-    const { data } = await httpService.get("/random");
+    const { data } = await httpService.get(`/random?category=${category}`);
     return data as OneJoke;
   } catch (error) {
     console.log(error);

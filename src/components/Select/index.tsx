@@ -11,7 +11,7 @@ const Select = ({ name, handleSelect, optionList }: ISelect) => {
     <select
       name={name}
       id={name}
-      className="bg-transparent w-full font-bold first-letter:uppercase"
+      className="bg-transparent w-auto font-bold first-letter:uppercase"
       onChange={(option) => handleSelect(option.target.value)}
     >
       <option value="" className="bg-gray-900 font-bold">

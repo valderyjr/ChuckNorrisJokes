@@ -1,49 +1,49 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
+import CardJoke from "../../components/CardJoke";
 import Input from "../../components/Input";
 import PageTitle from "../../components/PageTitle";
 import Select from "../../components/Select";
 import AppLayout from "../../layouts/AppLayout";
-import { getCategoryList } from "../../services/httpService";
+import {
+  getARandomJokeFromCategory,
+  getCategoryList,
+  OneJoke,
+} from "../../services/httpService";
 
 const SearchOne = () => {
-  const mockCategories = ["animal", "dev", "career"];
-  const [categories, setCategories] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [categoryChoosed, setCategoryChoosed] = useState("");
   const [error, setError] = useState(false);
+  const [joke, setJoke] = useState<OneJoke | null>(null);
 
-  useEffect(() => {
-    const getAllCategories = async () => {
-      const categoryList = await getCategoryList();
-      if (!categoryList) {
-        setCategories([]);
-        setError(true);
-        return;
-      }
-      setError(false);
-      setCategories([...categoryList]);
-    };
-    getAllCategories();
-  }, []);
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <AppLayout>
       <PageTitle title="Pesquise por uma palavra ou categoria!" />
-      <section className="flex-1 flex mt-8 flex-col">
-        <form className="flex flex-col gap-8 items-center">
+      <section className="flex-1 flex mt-8 flex-col gap-8">
+        <form
+          className="flex flex-col md:flex-row gap-8 items-center justify-center"
+          onSubmit={handleSubmitForm}
+        >
           <Input
             value={input}
             handleInput={setInput}
             placeholder="Insira um nome."
           />
-          <Select
-            name="categories"
-            optionList={categories}
-            handleSelect={setCategoryChoosed}
-          />
           <Button type="submit" text="Pesquisar" />
         </form>
+        <div className="flex items-center justify-center w-full mt-8">
+          {joke && (
+            <CardJoke
+              text={joke.value}
+              createdAt={joke.created_at}
+              id={joke.id}
+            />
+          )}
+        </div>
       </section>
     </AppLayout>
   );
