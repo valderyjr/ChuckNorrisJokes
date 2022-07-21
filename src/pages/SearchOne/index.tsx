@@ -81,6 +81,7 @@ const SearchOne = () => {
               <div className="w-full flex justify-center items-center gap-4">
                 {jokeSelected.id !== jokeList[0].id && (
                   <BsFillArrowLeftSquareFill
+                    id="icon-previous"
                     cursor={"pointer"}
                     fontSize={32}
                     onClick={() => getPreviousJoke(jokeSelected.id)}
@@ -93,6 +94,7 @@ const SearchOne = () => {
                 />
                 {jokeSelected.id !== jokeList[quantity - 1].id && (
                   <BsFillArrowRightSquareFill
+                    id="icon-next"
                     cursor={"pointer"}
                     fontSize={32}
                     onClick={() => getNextJoke(jokeSelected.id)}

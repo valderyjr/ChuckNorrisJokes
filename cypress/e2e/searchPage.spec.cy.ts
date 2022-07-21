@@ -1,4 +1,4 @@
-import { IMultipleJokes } from "../../src/services/httpService";
+import { IMultipleJokes, IOneJoke } from "../../src/services/httpService";
 
 interface IResponseJokeFromSearch {
   status: number;
@@ -34,7 +34,7 @@ describe("Testing the search page", () => {
       "Infelizmente não encontramos nenhuma piada com este nome."
     ).should("not.exist");
   });
-  it("should not gerenate a joke with an invalid input", () => {
+  it("should not generate a joke with an invalid input", () => {
     const textInput = "valdery";
     const urlRequest = `https://api.chucknorris.io/jokes/search?query=${textInput}`;
     const quantityResponse = 0;
@@ -51,5 +51,70 @@ describe("Testing the search page", () => {
     cy.contains(
       "Infelizmente não encontramos nenhuma piada com este nome."
     ).should("exist");
+  });
+  it("should be able to get next joke when possible", () => {
+    const textInput = "vald";
+    const urlRequest = `https://api.chucknorris.io/jokes/search?query=${textInput}`;
+    const quantityResponse = 2;
+
+    let responseCopy: IOneJoke[] = [];
+
+    cy.get("input").clear().type(textInput);
+    cy.get("button").click();
+    cy.request({
+      url: urlRequest,
+      method: "get",
+    }).then(({ status, body }: IResponseJokeFromSearch) => {
+      expect(status).to.eq(200);
+      responseCopy = [...body.result];
+      expect(body.total).to.eq(quantityResponse);
+      const valueUpperCased = body.result[0].value.toUpperCase();
+      expect(valueUpperCased).to.include(textInput.toUpperCase());
+      console.log(responseCopy);
+    });
+    cy.get("#text-joke").then((text) => {
+      expect(text.text()).equal(responseCopy[0].value);
+    });
+    cy.get("#icon-next").should("exist").click();
+    cy.get("#text-joke").then((text) => {
+      expect(text.text()).equal(responseCopy[1].value);
+    });
+    cy.get("#icon-next").should("not.exist");
+  });
+  it("should be able to get previous joke when possible", () => {
+    const textInput = "vald";
+    const urlRequest = `https://api.chucknorris.io/jokes/search?query=${textInput}`;
+    const quantityResponse = 2;
+
+    let responseCopy: IOneJoke[] = [];
+
+    cy.get("input").clear().type(textInput);
+    cy.get("button").click();
+    cy.request({
+      url: urlRequest,
+      method: "get",
+    }).then(({ status, body }: IResponseJokeFromSearch) => {
+      expect(status).to.eq(200);
+      responseCopy = [...body.result];
+      expect(body.total).to.eq(quantityResponse);
+      const valueUpperCased = body.result[0].value.toUpperCase();
+      expect(valueUpperCased).to.include(textInput.toUpperCase());
+      console.log(responseCopy);
+    });
+    cy.get("#icon-previous").should("not.exist");
+    cy.get("#text-joke").then((text) => {
+      expect(text.text()).equal(responseCopy[0].value);
+    });
+    cy.get("#icon-next").click();
+    cy.get("#text-joke")
+      .should("be.visible")
+      .then((text) => {
+        expect(text.text()).equal(responseCopy[1].value);
+      });
+    cy.get("#icon-previous").should("exist").click();
+    cy.get("#text-joke").then((text) => {
+      expect(text.text()).equal(responseCopy[0].value);
+    });
+    cy.get("#icon-previous").should("not.exist");
   });
 });
