@@ -11,7 +11,7 @@ const Input = ({ value, handleInput, ...rest }: IInput) => {
       value={value}
       onChange={({ target }) => handleInput(target.value)}
       {...rest}
-      className="text-gray-200 font-semibold pl-2 py-2 bg-transparent border-b border-gray-50 outline-none"
+      className="text-gray-200 w-full font-semibold pl-2 py-2 bg-transparent border-b border-gray-50 outline-none"
     />
   );
 };

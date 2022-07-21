@@ -19,3 +19,13 @@ export const getARandomJoke = async (): Promise<OneJoke | null> => {
     return null;
   }
 };
+
+export const getCategoryList = async (): Promise<string[] | null> => {
+  try {
+    const { data } = await httpService.get("/jokes/categories");
+    return data as string[];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
