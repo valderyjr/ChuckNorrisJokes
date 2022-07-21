@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import CardJoke from "../../components/CardJoke";
+import PageTitle from "../../components/PageTitle";
 import AppLayout from "../../layouts/AppLayout";
 import { getARandomJoke, OneJoke } from "../../services/httpService";
 
@@ -21,9 +22,10 @@ const HomePage = () => {
   };
   return (
     <AppLayout>
-      <h1 className="text-center font-bold text-2xl">
+      {/* <h1 className="text-center font-bold text-2xl">
         Brinque com piadas aleatórias sobre o Chuck Norris!
-      </h1>
+	</h1> */}
+      <PageTitle title="Brinque com piadas aleatórias sobre o Chuck Norris!" />
       <section className="flex-1 mt-8 flex flex-col gap-8 items-center">
         <Button text="Gere uma piada aleatória" onClick={handleRandomJoke} />
         <div className="flex items-center justify-center w-full">
