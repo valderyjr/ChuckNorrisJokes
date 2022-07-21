@@ -50,12 +50,14 @@ const CardJoke = ({ createdAt, text, id }: ICardJoke) => {
               className="inline-block absolute right-2 top-3 cursor-pointer"
               fontSize={20}
               onClick={handleLike}
+              id="icon-liked"
             />
           ) : (
             <AiOutlineHeart
               className="inline-block absolute right-2 top-3 cursor-pointer"
               fontSize={20}
               onClick={handleLike}
+              id="icon-not-liked"
             />
           )}
         </p>

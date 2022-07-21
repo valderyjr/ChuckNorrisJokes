@@ -44,7 +44,7 @@ describe("Testing the search page", () => {
       url: urlRequest,
       method: "get",
     }).then(({ status, body }: IResponseJokeFromSearch) => {
-      expect(status).to.eq(200); // Infelizmente retorna 200.
+      expect(status).to.eq(200); // Infelizmente retorna 200 em caso de erro.
       expect(body.total).to.eq(quantityResponse);
       expect(body.result).to.deep.equal([]);
     });
