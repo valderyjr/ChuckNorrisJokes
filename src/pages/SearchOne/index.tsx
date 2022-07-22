@@ -16,12 +16,16 @@ const SearchOne = () => {
   const [jokeList, setJokeList] = useState<IOneJoke[] | null>(null);
   const [jokeSelected, setJokeSelected] = useState<IOneJoke | null>(null);
   const [quantity, setQuantity] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setJokeSelected(null);
+    setLoading(true);
     const listResponse = await getJokesFromSearch(input);
     if (!listResponse || listResponse.total === 0) {
       setJokeSelected(null);
+      setLoading(false);
       setQuantity(0);
       setError(true);
       return;
@@ -29,6 +33,7 @@ const SearchOne = () => {
     setError(false);
     setJokeList(listResponse.result);
     setQuantity(listResponse.total);
+    setLoading(false);
     setJokeSelected(listResponse.result[0]);
   };
 
@@ -72,6 +77,12 @@ const SearchOne = () => {
           <Button type="submit" text="Pesquisar" />
         </form>
         <main className="flex items-center justify-center w-full flex-col gap-4">
+          {loading && (
+            <div
+              className="animate-spin w-8 h-8 border-4 border-r-gray-700 border-l-gray-700 border-b-gray-700 border-t-gray-100 rounded-full"
+              role="status"
+            ></div>
+          )}
           {jokeList && jokeSelected && (
             <>
               <h2 className="font-bold text-xl text-center">

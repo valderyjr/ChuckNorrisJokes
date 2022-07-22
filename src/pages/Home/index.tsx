@@ -3,7 +3,6 @@ import Button from "../../components/Button";
 import CardJoke from "../../components/CardJoke";
 import PageTitle from "../../components/PageTitle";
 import Select from "../../components/Select";
-import { useAppContext } from "../../hooks/useAppContext";
 import AppLayout from "../../layouts/AppLayout";
 import {
   getARandomJoke,
@@ -13,11 +12,11 @@ import {
 } from "../../services/httpService";
 
 const HomePage = () => {
-  const useContext = useAppContext();
   const [joke, setJoke] = useState<IOneJoke | null>(null);
   const [error, setError] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryChoosed, setCategoryChoosed] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getAllCategories = async () => {
@@ -34,18 +33,17 @@ const HomePage = () => {
   }, []);
 
   const handleRandomJoke = async () => {
+    setJoke(null);
+    setLoading(true);
+    setError(false);
     let randomJoke;
     if (!categoryChoosed) {
       randomJoke = await getARandomJoke();
     } else {
       randomJoke = await getARandomJokeFromCategory(categoryChoosed);
     }
-    if (!randomJoke) {
-      setJoke(null);
-      setError(true);
-      return;
-    }
-    setError(false);
+    setError(randomJoke ? false : true);
+    setLoading(false);
     setJoke(randomJoke);
     return;
   };
@@ -60,6 +58,12 @@ const HomePage = () => {
         />
         <Button text="Gerar piada aleatória" onClick={handleRandomJoke} />
         <div className="flex items-center justify-center w-full">
+          {loading && (
+            <div
+              className="animate-spin w-8 h-8 border-4 border-r-gray-700 border-l-gray-700 border-b-gray-700 border-t-gray-100 rounded-full"
+              role="status"
+            ></div>
+          )}
           {joke && (
             <CardJoke
               text={joke.value}
